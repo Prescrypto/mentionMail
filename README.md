@@ -1,7 +1,15 @@
-Send Mails to @Mentions at "MAndo de Control".
-==============================================
+Send Mail to @Mentions in a Google Sheet:
+=========================================
 
-Send Mails to @Mentions at "MAndo de Control".
+With this google script you can write in any cell of your spreadsheet a "@Mention" and a message and a mail will be sent to the email assigned to that @Mention with the message in it.
+
+Example:
+Write in any sheet cell: Code in Django all day with @Jesus and @Everardo
+
+The message will filter de @Names and send a mail to the specified mail in other shhet.
+
+
+
 
 Here is the google sheet link for testing purposes:
 
@@ -10,31 +18,10 @@ https://docs.google.com/spreadsheets/d/1pThQnyanWD1ADk8OpSVen-_fYQDXqCXhI03YZpuG
 
 
 
-DEPLOYING TO GOOGLE SCRIPTS IN DRIVE:
-
-After you have made modifications, you can deploy to google scripts in drive by typing in console:
-
-gapps upload
-
-Then, you can go to:
-
-https://script.google.com/d/1EmximV8XdhTSuZ4l4XeP_772gcWoimqqqgHmUwgK_w0rurzXTNp4LtHf/edit?usp=sharing
-
-and see the changes.
-
-
-
-
-TESTING IN AN ACTUAL GOOGLE SHEET:
-
-Select: PUBLISH > TEST AS ADD-ON > SELECT LATEST CODE VERSION > TEST
-
-
-
 ACTUAL USE IN YOUR GOOGLE SHEET:
 
 1. COPY THE CODE
-2. IN YOUR ACTUAL SHEET SELECT TOOL > SCRIPT EDITOR
+2. IN YOUR ACTUAL SHEET SELECT TOOLS > SCRIPT EDITOR
 3. PASTE THE CODE
 7. CREATE A CONTACT SHEET WITH THE FOLLOWING PATTERN:
 
@@ -51,6 +38,14 @@ ACTUAL USE IN YOUR GOOGLE SHEET:
 
 var sheet = SpreadsheetApp.openById("HERE!!!!!!!!!!!!!!");
 
-10. SAVE
+10. UNCOMMENT THE FIRST SNIPPET OF CODE JUST THE FIRST TIME YOU ARE TRYING THIS CODE
 
-11. MAKE A MENTION IN ANY CELL WITH THE FORMAT @MENTION ... AND AN EMAIL WILL BE SEND TO THE EMAIL ASSIGNED TO THAT @MENTION IN THE CONTACT SHEET.
+11. PRESS THE PLAY BUTTON (An arror will be thrown (THATS NORMAL), thats because no cell was selected when running the code).
+
+12. Authorize your gmail account... this mail will be used to send all the emails.
+
+13. RE-COMMENT THE FIRST SNIPPED... THIS WILL PREVENT DUPLICATE EMAILS.
+
+14. SAVE
+
+11. MAKE A MENTION IN ANY CELL WITH THE FORMAT @MENTION (THIS CAN BE IN ANY SPREADSHEET YOU CREATE IN THIS DOCUMENT)... AND AN EMAIL WILL BE SENT TO THE EMAIL ASSIGNED TO THAT @MENTION IN THE CONTACT SHEET.
