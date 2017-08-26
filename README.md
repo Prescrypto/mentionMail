@@ -11,9 +11,9 @@ The message will filter de @Names and send a mail to the specified mail in other
 
 
 
-Here is the google sheet link for testing purposes:
+Here is the google sheet link for testing purposes (you have to do the process below for it to work):
 
-https://docs.google.com/spreadsheets/d/1pThQnyanWD1ADk8OpSVen-_fYQDXqCXhI03YZpuGzEc/edit#gid=634175681
+https://docs.google.com/spreadsheets/d/1IDcv9Qz-FZjhxP3jpmvdo0fTsVJMKRXOVGY8bu2DOk0/edit?usp=sharing
 
 
 
@@ -23,7 +23,7 @@ ACTUAL USE IN YOUR GOOGLE SHEET:
 1. COPY THE CODE
 2. IN YOUR ACTUAL SHEET SELECT TOOLS > SCRIPT EDITOR
 3. PASTE THE CODE
-7. CREATE A CONTACT SHEET WITH THE FOLLOWING PATTERN:
+7. CREATE A CONTACT SHEET WITH THE FOLLOWING PATTERN (Make sure its the first sheet):
 
     1st column      2nd Column
     @Carlos         carlosexample@gmail.com
