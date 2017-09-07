@@ -30,7 +30,7 @@ function mentionMail(e){
   // Gives a list of @Mentions in current cell
   var mentions = editedText.match(/@\w*/g);
   // Gets Sheet with a list of @Mentions and mails. MUST DO:MANUALLY SET MAIL LIST ID FROM SHEET URL
-  var sheet = SpreadsheetApp.openById("1ONu1ygLgQR5LhB-k2XJAkSKcgwfKf17fct0AmMDme7o");
+  var sheet = SpreadsheetApp.openById("1ZEDgDhKPtVU2SR0RlDCjNjkXkoqdo3faUnM7s9Y5lF8");
   var data = sheet.getDataRange().getValues();
   // Set Note Flag
   var setNote = false;
