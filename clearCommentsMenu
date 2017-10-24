@@ -1,0 +1,12 @@
+function onOpen() {
+  var ui = SpreadsheetApp.getUi();
+  // Or DocumentApp or FormApp.
+  ui.createMenu('Pr7o-Extras')
+      .addItem('Delete all comments', 'menuItem1')
+      .addSeparator()
+      .addToUi();
+}
+
+function menuItem1() {
+    SpreadsheetApp.getActiveSheet().clear({commentsOnly: true});
+}
