@@ -80,6 +80,6 @@ function mentionMail(e){
   // Set a note to current cell
   if (setNote) {
     range.setNote('Mail Sent to @Mentions on: ' + new Date());
-  }
-}
-}
+  };
+};
+};
