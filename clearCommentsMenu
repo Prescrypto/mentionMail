@@ -3,8 +3,8 @@ function onOpen() {
   // Or DocumentApp or FormApp.
   ui.createMenu('Pr7o-Extras')
       .addItem('Delete all comments', 'menuItem1')
-      .addItem('Change color to Yellow and send email warning', 'menuItem2')
-      .addItem('Change color to Red and send email warning', 'menuItem3')
+      .addItem('Change color to ☢️☢️☢️ and send email warning', 'menuItem2')
+      .addItem('Change color to 🔴🔴🔴 and send email warning', 'menuItem3')
       .addSeparator()
       .addToUi();
 }
@@ -27,8 +27,8 @@ function menuItem2() {
   var sheet = SpreadsheetApp.openById("1LeUwlGC9pjkdk0j2Aam8n_OP_Z9nzHZ0yCRQWsMa6aQ");
   var data = sheet.getDataRange().getValues();
   // Sets a value for the email subject
-  var subject = "👻  Mando de Control WARNING ⚠️: Objective color change to 🔶 🔶 🔶 YELLOW";
-  var content = "One of your objectives has changed color to 🔶🔶🔶 Go find out at:";
+  var subject = "👻  Mando de Control WARNING ⚠️: Objective color change to ☢️ ☢️ ☢️ YELLOW";
+  var content = "One of your objectives has changed color to ☢️☢️☢️ Go find out at:";
 
   // Iterates over @Mentions found and sets them in a temporal variable in lowerCase and removes extra characters
   for (var i = 0; i < mentions[0].length; i++) {
@@ -59,7 +59,7 @@ function menuItem3() {
   var sheet = SpreadsheetApp.openById("1LeUwlGC9pjkdk0j2Aam8n_OP_Z9nzHZ0yCRQWsMa6aQ");
   var data = sheet.getDataRange().getValues();
   // Sets a value for the email subject
-  var subject = "👻  Mando de Control WARNING ⚠️: Objective color change to 🔴 🔴 🔴 RED";
+  var subject = "👻  Mando de Control WARNING 🛑: Objective color change to 🔴 🔴 🔴 RED";
   var content = "One of your objectives has changed color to 🔴🔴🔴 Go find out at:";
 
   // Iterates over @Mentions found and sets them in a temporal variable in lowerCase and removes extra characters
