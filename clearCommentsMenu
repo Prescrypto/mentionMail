@@ -3,10 +3,20 @@ function onOpen() {
   // Or DocumentApp or FormApp.
   ui.createMenu('Pr7o-Extras')
       .addItem('Delete all comments', 'menuItem1')
+      .addItem('Change color to Yellow and email warning', 'menuItem2')
+      .addItem('Change color to Red and email warning', 'menuItem3')
       .addSeparator()
       .addToUi();
 }
 
 function menuItem1() {
     SpreadsheetApp.getActiveSheet().clear({commentsOnly: true});
+}
+
+function menuItem2() {
+
+}
+
+function menuItem3() {
+
 }
