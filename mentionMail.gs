@@ -34,6 +34,8 @@ function mentionMail(e){
   var data = sheet.getDataRange().getValues();
   // Set Note Flag
   var setNote = false;
+
+
   // Iterates over @Mentions found and sets them in a temporal variable in lowerCase and removes extra characters
   for (var i = 0; i < mentions.length; i++) {
     var correctMention = mentions[i].toLowerCase().replace(/[^\w\s]/gi, '');
@@ -51,11 +53,33 @@ function mentionMail(e){
         MailApp.sendEmail(data[j][1], subject, editedText + "\n" + sheetURL);
         };
       };
+
+      // Checks if cell background color is different from green and sends an email if so
+      var backgroundColor = range.getBackgroundColor();
+      Logger.log(backgroundColor);
+      Logger.log("Hola");
+      if (backgroundColor != "#00ff00") {
+        Logger.log("Hola Dif");
+        // gives a list of @mentions in cells from G to I column of current row.
+        var contentRangeMentions = "G" + mentionRow + ":I" + mentionRow;
+        var contentListMentions = ss.getRange(contentRangeMentions).getValues();
+        Logger.log(contentListMentions);
+
+        for (var i = 0; i < contentListMentions.length; i++) {
+          var correctListMention = contentListMentions[i].toLowerCase().replace(/[^\w\s]/gi, '');
+          if (correctListMention == correctName) {
+            MailApp.sendEmail(data[i][1], "Color change in one of your Mando de Control Objectives 👻", "There was a color change in one of your week's objectives that you should be aware of" + "\n" + sheetURL);
+          };
+        };
+
     };
+
   };
+
+
   // Set a note to current cell
   if (setNote) {
     range.setNote('Mail Sent to @Mentions on: ' + new Date());
-  }
-}
-#
+  };
+};
+};
