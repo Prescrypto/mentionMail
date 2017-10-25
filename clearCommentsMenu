@@ -3,10 +3,76 @@ function onOpen() {
   // Or DocumentApp or FormApp.
   ui.createMenu('Pr7o-Extras')
       .addItem('Delete all comments', 'menuItem1')
+      .addItem('Change color to ☢️☢️☢️ and send email warning', 'menuItem2')
+      .addItem('Change color to 🔴🔴🔴 and send email warning', 'menuItem3')
       .addSeparator()
       .addToUi();
 }
 
 function menuItem1() {
-    SpreadsheetApp.getActiveSheet().clear({commentsOnly: true});
+  SpreadsheetApp.getActiveSheet().clear({commentsOnly: true});
+}
+
+function menuItem2() {
+  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  var sheetURL = ss.getUrl();
+  // Change the background color of selected range to YELLOW
+  var color = SpreadsheetApp.getActiveRange().setBackground("yellow");
+  // Get actual background color of selected cells
+  var color = SpreadsheetApp.getActiveRange().getBackgroundColor();
+  // Get a list of values of selected cells
+  var mentions = SpreadsheetApp.getActiveRange().getValues();
+  Logger.log(mentions);
+  // Get values from the first sheet in the document
+  var sheet = SpreadsheetApp.openById("1ZEDgDhKPtVU2SR0RlDCjNjkXkoqdo3faUnM7s9Y5lF8");
+  var data = sheet.getDataRange().getValues();
+  // Sets a value for the email subject
+  var subject = "👻  Mando de Control WARNING ⚠️: Objective color change to ☢️ ☢️ ☢️ YELLOW";
+  var content = "One of your objectives has changed color to ☢️☢️☢️ Go find out at:";
+
+  // Iterates over @Mentions found and sets them in a temporal variable in lowerCase and removes extra characters
+  for (var i = 0; i < mentions[0].length; i++) {
+    var correctMention = mentions[0][i].toLowerCase().replace(/[^\w\s]/gi, '');
+    Logger.log("Correct mention: " + correctMention);
+    // Iterates over list of mails and sets them in a temporal variable in lowerCase and removes extra characters
+    for (var j = 0; j < data.length; j++) {
+      var correctName = data[j][0].toLowerCase().replace(/[^\w\s]/gi, '');
+      Logger.log(correctName);
+      if (correctMention == correctName) {
+        MailApp.sendEmail(data[j][1], subject, content + "\n" + sheetURL);
+      }
+    }
+  }
+}
+
+function menuItem3() {
+  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  var sheetURL = ss.getUrl();
+  // Change the background color of selected range to YELLOW
+  var color = SpreadsheetApp.getActiveRange().setBackground("red");
+  // Get actual background color of selected cells
+  var color = SpreadsheetApp.getActiveRange().getBackgroundColor();
+  // Get a list of values of selected cells
+  var mentions = SpreadsheetApp.getActiveRange().getValues();
+  Logger.log(mentions);
+  // Get values from the first sheet in the document
+  var sheet = SpreadsheetApp.openById("1ZEDgDhKPtVU2SR0RlDCjNjkXkoqdo3faUnM7s9Y5lF8");
+  var data = sheet.getDataRange().getValues();
+  // Sets a value for the email subject
+  var subject = "👻  Mando de Control WARNING 🛑: Objective color change to 🔴 🔴 🔴 RED";
+  var content = "One of your objectives has changed color to 🔴🔴🔴 Go find out at:";
+
+  // Iterates over @Mentions found and sets them in a temporal variable in lowerCase and removes extra characters
+  for (var i = 0; i < mentions[0].length; i++) {
+    var correctMention = mentions[0][i].toLowerCase().replace(/[^\w\s]/gi, '');
+    Logger.log("Correct mention: " + correctMention);
+    // Iterates over list of mails and sets them in a temporal variable in lowerCase and removes extra characters
+    for (var j = 0; j < data.length; j++) {
+      var correctName = data[j][0].toLowerCase().replace(/[^\w\s]/gi, '');
+      Logger.log(correctName);
+      if (correctMention == correctName) {
+        MailApp.sendEmail(data[j][1], subject, content + "\n" + sheetURL);
+      }
+    }
+  }
 }
