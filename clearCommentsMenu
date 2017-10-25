@@ -24,7 +24,7 @@ function menuItem2() {
   var mentions = SpreadsheetApp.getActiveRange().getValues();
   Logger.log(mentions);
   // Get values from the first sheet in the document
-  var sheet = SpreadsheetApp.openById("1LeUwlGC9pjkdk0j2Aam8n_OP_Z9nzHZ0yCRQWsMa6aQ");
+  var sheet = SpreadsheetApp.openById("1ZEDgDhKPtVU2SR0RlDCjNjkXkoqdo3faUnM7s9Y5lF8");
   var data = sheet.getDataRange().getValues();
   // Sets a value for the email subject
   var subject = "👻  Mando de Control WARNING ⚠️: Objective color change to ☢️ ☢️ ☢️ YELLOW";
