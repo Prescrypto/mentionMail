@@ -35,9 +35,10 @@ function trelloSend(e){
   
   switch (memberList[i]) {
     case 'membername':
-      var memberId = 'trellomemberid';
+      var memberId = 'os.environ.TRELLO_MEMBER_ID';
       Logger.log(memberId);
       break;
+  //Add as many cases as necessary
   };
     Logger.log(memberId);
     memberIdList.push(memberId);
@@ -51,30 +52,32 @@ function trelloSend(e){
     Logger.log(color);
   switch (color) {
     case '#color':
-      var labelColor = 'trelloidcolor';
+      var labelColor = 'os.environ.TRELLO_ID_COLOR';
       Logger.log(labelColor);
       break;
+  //Add as many cases as necessary
   };
   
   // Mando KPIs and Trello IdLabels content (read README.md for more info)
   switch (resultsContent) {
-      case 'text label':
-      var textLabel = 'trelloidlabel';
+    case 'kpi label':
+      var kpiLabel = 'os.environ.TRELLO_ID_KPI';
       Logger.log(textLabel);
       break;
+  //Add as many cases as necessary
   };
   
   Logger.log('This is kpiLabel: ' + kpiLabel);
 // API keys and tokens
- var apiKey = 'Trellokey'
- var trelloToken = 'Trellotoken'
+ var apiKey = 'os.environ.TRELLO_API';
+ var trelloToken = 'os.environ.TRELLO_TOKEN';
   
  var cardName = purposeContent;
  var cardDescription = whatContent;
- var cardLabel = '';
- var idList = '';
+ var cardLabel = ''; //This value is empty
+ var idList = 'os.environ.TRELLO_ID_LIST'; 
  var idMembers = joinedMemberIdList;
- var idLabels = textLabel + ',' + apiKey;
+ var idLabels = kpiLabel + ',' + apiKey;
  var options = {
    'method' : 'post'
  };  
