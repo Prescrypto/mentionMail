@@ -34,7 +34,23 @@ function mentionMail(e){
   var data = sheet.getDataRange().getValues();
   // Set Note Flag
   var setNote = false;
-
+  // Checks if cell background color is different from green and sends an email if so
+  var backgroundColor = range.getBackgroundColor();
+  Logger.log(backgroundColor);
+  Logger.log("Hola");
+  if (backgroundColor != "#00ff00") {
+    Logger.log("Hola Dif");
+    // gives a list of @mentions in cells from G to I column of current row.
+    var contentRangeMentions = "G" + mentionRow + ":I" + mentionRow;
+    var contentListMentions = ss.getRange(contentRangeMentions).getValues();
+    Logger.log(contentListMentions);
+    for (var i = 0; i < contentListMentions.length; i++) {
+      var correctListMention = contentListMentions[i].toLowerCase().replace(/[^\w\s]/gi, '');
+      if (correctListMention == correctName) {
+        MailApp.sendEmail(data[i][1], "Color change in one of your Mando de Control Objectives 👻", "There was a color change in one of your week's objectives that you should be aware of" + "\n" + sheetURL);
+      };
+    };
+  };
   if (mentions != null){
     // Iterates over @Mentions found and sets them in a temporal variable in lowerCase and removes extra characters
     for (var i = 0; i < mentions.length; i++) {
@@ -44,6 +60,7 @@ function mentionMail(e){
         var correctName = data[j][0].toLowerCase().replace(/[^\w\s]/gi, '');
           // Sends a mail if there is a match between @Mentions and Mail List.
         if (correctMention == correctName) {
+          Logger.log("We have a match");
           setNote = true;
           var subject = "👻 New Mention from Mando de Control 🖖 💉 🤑";
           // If mention is made inside G3:I17, it sends an email that includes cells from the same row from D, E, and F columns.
@@ -52,29 +69,10 @@ function mentionMail(e){
           } else {
           MailApp.sendEmail(data[j][1], subject, editedText + "\n" + sheetURL);
           };
+        }else{
+          Logger.log("We do not have a match");
         };
-
-        // Checks if cell background color is different from green and sends an email if so
-        var backgroundColor = range.getBackgroundColor();
-        Logger.log(backgroundColor);
-        Logger.log("Hola");
-        if (backgroundColor != "#00ff00") {
-          Logger.log("Hola Dif");
-          // gives a list of @mentions in cells from G to I column of current row.
-          var contentRangeMentions = "G" + mentionRow + ":I" + mentionRow;
-          var contentListMentions = ss.getRange(contentRangeMentions).getValues();
-          Logger.log(contentListMentions);
-
-          for (var i = 0; i < contentListMentions.length; i++) {
-            var correctListMention = contentListMentions[i].toLowerCase().replace(/[^\w\s]/gi, '');
-            if (correctListMention == correctName) {
-              MailApp.sendEmail(data[i][1], "Color change in one of your Mando de Control Objectives 👻", "There was a color change in one of your week's objectives that you should be aware of" + "\n" + sheetURL);
-            };
-          };
-
       };
-
-    };
     };
 
     // Set a note to current cell
