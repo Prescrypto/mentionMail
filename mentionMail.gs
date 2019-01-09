@@ -30,7 +30,7 @@ function mentionMail(e){
   // Gives a list of @Mentions in current cell
   var mentions = editedText.match(/@\w*/g);
   // Gets Sheet with a list of @Mentions and mails. MUST DO:MANUALLY SET MAIL LIST ID FROM SHEET URL
-  var sheet = SpreadsheetApp.openById("1ZEDgDhKPtVU2SR0RlDCjNjkXkoqdo3faUnM7s9Y5lF8");
+  var sheet = SpreadsheetApp.openById(id_spreadsheet);
   var data = sheet.getDataRange().getValues();
   // Set Note Flag
   var setNote = false;
@@ -45,7 +45,7 @@ function mentionMail(e){
         // Sends a mail if there is a match between @Mentions and Mail List.
       if (correctMention == correctName) {
         setNote = true;
-        var subject = "👻 New Mention from Mando de Control 🖖 💉 🤑";
+        var subject = "subject";
         // If mention is made inside G3:I17, it sends an email that includes cells from the same row from D, E, and F columns.
         if (rangeList.indexOf(mentionCell) != -1) {
           MailApp.sendEmail(data[j][1], subject, editedText + "\n" + "Purpose (Customer): " + contentList[0][0] + "\n" + "What? (Process): " + contentList[0][1] + "\n" + "Results (KPIs): " + contentList[0][2] + "\n" + sheetURL);
