@@ -24,7 +24,7 @@ function menuItem2() {
   var mentions = SpreadsheetApp.getActiveRange().getValues();
   Logger.log(mentions);
   // Get values from the first sheet in the document
-  var sheet = SpreadsheetApp.openById("1ZEDgDhKPtVU2SR0RlDCjNjkXkoqdo3faUnM7s9Y5lF8");
+  var sheet = SpreadsheetApp.openById("spreadsheetID"); // replace you spread sheet ID for "spreadsheetID"
   var data = sheet.getDataRange().getValues();
   // Sets a value for the email subject
   var subject = "👻  Mando de Control WARNING ⚠️: Objective color change to ☢️ ☢️ ☢️ YELLOW";
@@ -56,10 +56,10 @@ function menuItem3() {
   var mentions = SpreadsheetApp.getActiveRange().getValues();
   Logger.log(mentions);
   // Get values from the first sheet in the document
-  var sheet = SpreadsheetApp.openById("1ZEDgDhKPtVU2SR0RlDCjNjkXkoqdo3faUnM7s9Y5lF8");
+  var sheet = SpreadsheetApp.openById("spreadsheetID"); // replace you spread sheet ID for "spreadsheetID"
   var data = sheet.getDataRange().getValues();
   // Sets a value for the email subject
-  var subject = "👻  Mando de Control WARNING 🛑: Objective color change to 🔴 🔴 🔴 RED";
+  var subject = "👻 Mando de Control WARNING 🛑: Objective color change to 🔴 🔴 🔴 RED";
   var content = "One of your objectives has changed color to 🔴🔴🔴 Go find out at:";
 
   // Iterates over @Mentions found and sets them in a temporal variable in lowerCase and removes extra characters
