@@ -6,6 +6,7 @@ function onOpen() {
     .addItem('Change color to ☢️☢️☢️ and send email warning', 'menuItem2')
     .addItem('Change color to 🔴🔴🔴 and send email warning', 'menuItem3')
     .addItem('Export Tasks to Trello', 'menuItem4')
+    .addItem('Archive Completed Tasks', 'menuItem5')
     .addSeparator()
     .addToUi();
 }
@@ -100,5 +101,47 @@ function menuItem4() {
       currentIdListCell.setValue("trelloIDList"); // replace you trello ID list for "trelloIDList"
       j++;
     }
+}
+
+function menuItem5() {
+  /*  This method add to historic sheet all the tasks that are "Complete" status in the
+      Mando de Control sheet
+  */
+  // Defines variables
+  var sheets = SpreadsheetApp.getActiveSpreadsheet().getSheets();
+  var historic = sheets[2];
+  var date = Utilities.formatDate(new Date(), "GMT-6", "dd/MMM/yyyy")
+  var area = null;
+  // Obtain from Mando de control sheet all its values
+  var mando_de_control = sheets[1]
+  var contentList = mando_de_control.getDataRange().getValues();
+  for(n=0; n < contentList.length; ++n){
+    // Remove the 2 first rows from Mando de control sheet
+    var contentList_clean = contentList[n].slice(2)
+    // This block add the area to each row
+    if (contentList_clean[0] != ''){
+      area = contentList_clean[0]
+    } else {
+      contentList_clean.shift();
+      contentList_clean.unshift(area);
+    }
+    // This block add the row if status is Completed to historic sheet
+    if (contentList_clean[9] == 'Completed') {
+      // Remove Completed value
+      contentList_clean.pop();
+      // Add archived_data variable to contentList_clean
+      contentList_clean.unshift(date)
+      // Obtains the last row not empty in historic sheet
+      var lastRow_historic = historic.getRange("A1:A").getValues().filter(String).length + 1;
+      // This block add all the Mando de control values in a new row from Historic sheet
+      var i = 0; // reset i value to each new each method
+      contentList_clean.forEach(function(value) {
+         historic.getRange(lastRow_historic, i + 1).setValue(value);
+         i++;
+      });
+      // Remove row content from Mando de control
+      mando_de_control.getRange(n + 1, 4, 1, 9).clearContent().clearContent();
+    }
+  }
 }
 
