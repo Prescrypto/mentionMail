@@ -2,11 +2,13 @@ function onOpen() {
   var ui = SpreadsheetApp.getUi();
   // Or DocumentApp or FormApp.
   ui.createMenu('Pr7o-Extras')
-      .addItem('Delete all comments', 'menuItem1')
-      .addItem('Change color to ☢️☢️☢️ and send email warning', 'menuItem2')
-      .addItem('Change color to 🔴🔴🔴 and send email warning', 'menuItem3')
-      .addSeparator()
-      .addToUi();
+    .addItem('Delete all comments', 'menuItem1')
+    .addItem('Change color to ☢️☢️☢️ and send email warning', 'menuItem2')
+    .addItem('Change color to 🔴🔴🔴 and send email warning', 'menuItem3')
+    .addItem('Export Tasks to Trello', 'menuItem4')
+    .addItem('Archive Completed Tasks', 'menuItem5')
+    .addSeparator()
+    .addToUi();
 }
 
 function menuItem1() {
@@ -24,7 +26,7 @@ function menuItem2() {
   var mentions = SpreadsheetApp.getActiveRange().getValues();
   Logger.log(mentions);
   // Get values from the first sheet in the document
-  var sheet = SpreadsheetApp.openById("1ZEDgDhKPtVU2SR0RlDCjNjkXkoqdo3faUnM7s9Y5lF8");
+  var sheet = SpreadsheetApp.openById("spreadsheetID"); // replace you spread sheet ID for "spreadsheetID"
   var data = sheet.getDataRange().getValues();
   // Sets a value for the email subject
   var subject = "👻  Mando de Control WARNING ⚠️: Objective color change to ☢️ ☢️ ☢️ YELLOW";
@@ -56,10 +58,10 @@ function menuItem3() {
   var mentions = SpreadsheetApp.getActiveRange().getValues();
   Logger.log(mentions);
   // Get values from the first sheet in the document
-  var sheet = SpreadsheetApp.openById("1ZEDgDhKPtVU2SR0RlDCjNjkXkoqdo3faUnM7s9Y5lF8");
+  var sheet = SpreadsheetApp.openById("spreadsheetID"); // replace you spread sheet ID for "spreadsheetID"
   var data = sheet.getDataRange().getValues();
   // Sets a value for the email subject
-  var subject = "👻  Mando de Control WARNING 🛑: Objective color change to 🔴 🔴 🔴 RED";
+  var subject = "👻 Mando de Control WARNING 🛑: Objective color change to 🔴 🔴 🔴 RED";
   var content = "One of your objectives has changed color to 🔴🔴🔴 Go find out at:";
 
   // Iterates over @Mentions found and sets them in a temporal variable in lowerCase and removes extra characters
@@ -76,3 +78,70 @@ function menuItem3() {
     }
   }
 }
+
+function menuItem4() {
+  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  var contentRange = "D3:F25"
+  var contentList = ss.getRange(contentRange).getValues();
+  var sheets = SpreadsheetApp.getActiveSpreadsheet().getSheets();
+  var trelloSheet = sheets[1];
+  /*
+  var cell = trelloSheet.getRange("O6");
+  cell.setValue(contentList[0][0] + " - " + contentList[0][1] + " - " + contentList[0][2]);
+  */
+
+    var j = 2;
+    for (var i = 0; i < contentList.length; i++) {
+      var cellValue = "O" + j;
+      var currentRow = contentList[i];
+      var currentCell = trelloSheet.getRange(cellValue);
+      currentCell.setValue(currentRow[0] + " - " + currentRow[1] + " - " + currentRow[2]);
+      var idListValue = "H" + j;
+      var currentIdListCell = trelloSheet.getRange(idListValue);
+      currentIdListCell.setValue("trelloIDList"); // replace you trello ID list for "trelloIDList"
+      j++;
+    }
+}
+
+function menuItem5() {
+  /*  This method add to historic sheet all the tasks that are "Complete" status in the
+      Mando de Control sheet
+  */
+  // Defines variables
+  var sheets = SpreadsheetApp.getActiveSpreadsheet().getSheets();
+  var historic = sheets[2];
+  var date = Utilities.formatDate(new Date(), "GMT-6", "dd/MMM/yyyy")
+  var area = null;
+  // Obtain from Mando de control sheet all its values
+  var mando_de_control = sheets[1]
+  var contentList = mando_de_control.getDataRange().getValues();
+  for(n=0; n < contentList.length; ++n){
+    // Remove the 2 first rows from Mando de control sheet
+    var contentList_clean = contentList[n].slice(2)
+    // This block add the area to each row
+    if (contentList_clean[0] != ''){
+      area = contentList_clean[0]
+    } else {
+      contentList_clean.shift();
+      contentList_clean.unshift(area);
+    }
+    // This block add the row if status is Completed to historic sheet
+    if (contentList_clean[9] == 'Completed') {
+      // Remove Completed value
+      contentList_clean.pop();
+      // Add archived_data variable to contentList_clean
+      contentList_clean.unshift(date)
+      // Obtains the last row not empty in historic sheet
+      var lastRow_historic = historic.getRange("A1:A").getValues().filter(String).length + 1;
+      // This block add all the Mando de control values in a new row from Historic sheet
+      var i = 0; // reset i value to each new each method
+      contentList_clean.forEach(function(value) {
+         historic.getRange(lastRow_historic, i + 1).setValue(value);
+         i++;
+      });
+      // Remove row content from Mando de control
+      mando_de_control.getRange(n + 1, 4, 1, 9).clearContent().clearContent();
+    }
+  }
+}
+
