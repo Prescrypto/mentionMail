@@ -1,22 +1,25 @@
 /*
 // Trigger Builder. RUN ONLY ONCE... Press Play and authorize Gmail ... then comment.
 // Already run in Mando de Control... no need for more... This will avoid duplicate Emails.
- ScriptApp.newTrigger('mentionMail')
-   .forSpreadsheet(SpreadsheetApp.getActive())
-   .onEdit()
-   .create();
+ScriptApp.newTrigger('mentionMail')
+  .forSpreadsheet(SpreadsheetApp.getActive())
+  .onEdit()
+  .create();
 */
 
-// Creates an array from G3:I17.
+// Creates an array from G3:I27.
 var columnList = ['G', 'H', 'I'];
 var rangeList = [];
 
 for (var num = 3; num < 18; num++) {
-    columnList.forEach(function(letter) {
-        rangeList.push(letter + num);
-    })
+  columnList.forEach(function(letter) {
+    rangeList.push(letter + num);
+  })
 };
 
+/*
+  This method verifies verify the information of the column G,H and I and send email
+*/
 function mentionMail(e){
   // Parses @Mentions from a google sheet cell, sends an email and comments cell
   var ss = SpreadsheetApp.getActiveSpreadsheet();
@@ -31,16 +34,13 @@ function mentionMail(e){
   var mentions = editedText.match(/@\w*/g);
   // Gets Sheet with a list of @Mentions and mails. MUST DO:MANUALLY SET MAIL LIST ID FROM SHEET URL
   var sheet = SpreadsheetApp.openById(id_spreadsheet);
-  var data = sheet.getDataRange().getValues();  
+  var data = sheet.getDataRange().getValues();
   // Checks if cell background color is different from green and sends an email if so
   var backgroundColor = range.getBackgroundColor();
-  Logger.log(backgroundColor);
   if (backgroundColor != "#00ff00") {
-    Logger.log("Hola Dif");
     // gives a list of @mentions in cells from G to I column of current row.
     var contentRangeMentions = "G" + mentionRow + ":I" + mentionRow;
     var contentListMentions = ss.getRange(contentRangeMentions).getValues();
-    Logger.log(contentListMentions);
   };
   // Set Note Flag
   var setNote = false;
@@ -67,7 +67,6 @@ function mentionMail(e){
         };
       };
     };
-
     // Set a note to current cell
     if (setNote) {
       range.setNote('Mail Sent to @Mentions on: ' + new Date());
